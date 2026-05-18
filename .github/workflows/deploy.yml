@@ -1,0 +1,9 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    uses: MartinSuarez-Pumpun/innovadef-demos/.github/workflows/reusable-deploy.yml@main
