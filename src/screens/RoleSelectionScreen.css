@@ -1,0 +1,139 @@
+.role-selection-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100svh;
+  padding: 40px 24px;
+  gap: 32px;
+  animation: fadeIn 0.5s ease;
+}
+
+.role-selection-title {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-align: center;
+}
+
+.role-selection-heading {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-h);
+  text-align: center;
+  margin-top: 4px;
+}
+
+.role-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  width: 100%;
+  max-width: 720px;
+}
+
+@media (max-width: 560px) {
+  .role-grid { grid-template-columns: 1fr; }
+}
+
+.role-card-btn {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 20px;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.2s, background 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.role-card-btn:hover {
+  border-color: var(--accent-border);
+  background: var(--accent-dim);
+}
+
+.role-card-id {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text);
+  opacity: 0.6;
+}
+
+.role-card-name {
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+}
+
+.role-card-desc {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 145%;
+}
+
+.role-card-dims {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 4px;
+}
+
+.role-dim-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+}
+
+.role-dim-label {
+  color: var(--text);
+  opacity: 0.7;
+  min-width: 130px;
+}
+
+.role-dim-chip {
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.chip-critical {
+  background: rgba(255, 82, 82, 0.15);
+  color: var(--red);
+  border: 1px solid rgba(255, 82, 82, 0.3);
+}
+
+.chip-high {
+  background: var(--accent-dim);
+  color: var(--accent);
+  border: 1px solid var(--accent-border);
+}
+
+.chip-medium {
+  background: var(--green-dim);
+  color: var(--green);
+  border: 1px solid rgba(95, 227, 176, 0.25);
+}
+
+.chip-low {
+  background: var(--bg-card);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

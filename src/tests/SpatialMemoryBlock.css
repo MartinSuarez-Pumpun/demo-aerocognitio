@@ -1,0 +1,133 @@
+.sm-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100svh;
+  padding: 24px;
+  gap: 20px;
+  animation: fadeIn 0.4s ease;
+}
+
+.sm-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sm-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.sm-progress {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text);
+  opacity: 0.6;
+}
+
+.sm-phase-label {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-h);
+  text-align: center;
+}
+
+.sm-time-hint {
+  font-weight: 400;
+  opacity: 0.5;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+}
+
+.sm-countdown {
+  font-family: var(--mono);
+  font-size: 40px;
+  font-weight: 600;
+  color: var(--accent);
+  text-shadow: 0 0 20px rgba(255, 181, 71, 0.3);
+}
+
+.sm-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-card);
+}
+
+.sm-cell {
+  width: 52px;
+  height: 52px;
+  border: 1px solid var(--border-dim);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  background: var(--bg-panel);
+  transition: all 0.15s;
+}
+
+.sm-cell.clickable {
+  cursor: pointer;
+}
+
+.sm-cell.clickable:hover {
+  border-color: var(--accent-border);
+  background: var(--accent-dim);
+}
+
+.sm-cell.user-selected {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+}
+
+.sm-cell.correct-pos {
+  border-color: var(--green);
+  background: var(--green-dim);
+}
+
+.sm-cell.wrong-pos {
+  border-color: var(--red);
+  background: var(--red-dim);
+}
+
+.sm-instruction {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+  opacity: 0.7;
+  text-align: center;
+}
+
+.sm-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.sm-score {
+  font-family: var(--mono);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--green);
+  min-height: 32px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}

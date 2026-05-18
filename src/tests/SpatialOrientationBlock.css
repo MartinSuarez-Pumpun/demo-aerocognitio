@@ -1,0 +1,129 @@
+.so-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100svh;
+  padding: 24px;
+  gap: 24px;
+  animation: fadeIn 0.4s ease;
+}
+
+.so-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.so-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.so-progress {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text);
+  opacity: 0.6;
+}
+
+.so-instruction {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text);
+  opacity: 0.7;
+}
+
+.so-adi-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.so-adi-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text);
+  opacity: 0.6;
+}
+
+.so-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  max-width: 480px;
+}
+
+.so-option-btn {
+  background: var(--bg-panel);
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.so-option-btn:hover {
+  border-color: var(--accent-border);
+  background: var(--accent-dim);
+}
+
+.so-option-btn.selected {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+}
+
+.so-option-btn.correct-reveal {
+  border-color: var(--green);
+  background: var(--green-dim);
+}
+
+.so-option-btn.wrong-reveal {
+  border-color: var(--red);
+  background: var(--red-dim);
+}
+
+.so-option-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+  opacity: 0.6;
+}
+
+.so-confirm-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.so-feedback {
+  font-family: var(--mono);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  min-height: 32px;
+  text-align: center;
+}
+
+.so-feedback.correct { color: var(--green); }
+.so-feedback.incorrect { color: var(--red); }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
