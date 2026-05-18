@@ -3,10 +3,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100svh;
-  padding: 40px 24px;
+  height: 100%;
+  padding: 0 24px;
   gap: 32px;
   animation: fadeIn 0.5s ease;
+  box-sizing: border-box;
 }
 
 .role-selection-title {
@@ -40,8 +41,7 @@
 
 .role-card-btn {
   background: var(--bg-panel);
-  border: 1px solid var(--border);
-  border-radius: 6px;
+  border: 1.5px solid var(--border);
   padding: 20px;
   cursor: pointer;
   text-align: left;
@@ -102,7 +102,6 @@
 
 .role-dim-chip {
   padding: 2px 8px;
-  border-radius: 3px;
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.08em;

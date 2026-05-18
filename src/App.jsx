@@ -7,6 +7,8 @@ import ReportScreen from './screens/ReportScreen'
 import MentalRotationBlock from './tests/MentalRotationBlock'
 import SpatialOrientationBlock from './tests/SpatialOrientationBlock'
 import SpatialMemoryBlock from './tests/SpatialMemoryBlock'
+import MilitaryBackground from './ui/MilitaryBackground'
+import MouseGlow from './ui/MouseGlow'
 import './App.css'
 
 const MR_INSTRUCTIONS = {
@@ -58,7 +60,11 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      {screens[phase] ?? <WelcomeScreen />}
+      <MilitaryBackground />
+      <MouseGlow />
+      <div className="app-content">
+        {screens[phase] ?? <WelcomeScreen />}
+      </div>
     </div>
   )
 }

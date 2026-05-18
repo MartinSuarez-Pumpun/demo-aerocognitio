@@ -166,7 +166,7 @@ export default function SpatialOrientationBlock() {
         setClickCount(0)
         setAnswered(false)
         setFeedback(null)
-        setTimeLeft(TIMEOUT_MS)
+        setTimeLeft(trials[trialIdx + 1]?.isPractice ? TIMEOUT_PRACTICE : TIMEOUT_REAL)
         startTimeRef.current = Date.now()
       }
     }, 500)

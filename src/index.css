@@ -1,27 +1,27 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
 :root {
-  --bg:           #0a0e14;
-  --bg-panel:     #0f1520;
-  --bg-card:      #111827;
-  --border:       #1e2d42;
-  --border-dim:   #152030;
-  --text:         #8ca0b8;
-  --text-h:       #e8eef5;
-  --accent:       #ffb547;
-  --accent-dim:   rgba(255, 181, 71, 0.12);
-  --accent-border:rgba(255, 181, 71, 0.35);
-  --green:        #5fe3b0;
-  --green-dim:    rgba(95, 227, 176, 0.1);
-  --red:          #ff5252;
-  --red-dim:      rgba(255, 82, 82, 0.1);
-  --shadow:       0 8px 32px rgba(0,0,0,0.6);
+  --bg:           #070707;
+  --bg-panel:     #0d0d0d;
+  --bg-card:      #0a0a0a;
+  --border:       rgba(0, 255, 65, 0.22);
+  --border-dim:   rgba(0, 255, 65, 0.10);
+  --text:         rgba(0, 255, 65, 0.65);
+  --text-h:       #00FF41;
+  --accent:       #00FF41;
+  --accent-dim:   rgba(0, 255, 65, 0.05);
+  --accent-border:rgba(0, 255, 65, 0.40);
+  --green:        #00FF41;
+  --green-dim:    rgba(0, 255, 65, 0.08);
+  --red:          #FF2B2B;
+  --red-dim:      rgba(255, 43, 43, 0.10);
+  --shadow:       0 8px 32px rgba(0,0,0,0.8);
 
-  --mono: 'JetBrains Mono', ui-monospace, Consolas, monospace;
-  --sans: 'Inter', system-ui, sans-serif;
+  --mono: 'Share Tech Mono', 'Courier New', monospace;
+  --sans: 'Share Tech Mono', 'Courier New', monospace;
 
-  font: 16px/150% var(--sans);
-  letter-spacing: 0.12px;
+  font: 16px/150% var(--mono);
+  letter-spacing: 0.08em;
   color: var(--text);
   background: var(--bg);
   font-synthesis: none;
@@ -29,17 +29,23 @@
   -webkit-font-smoothing: antialiased;
 }
 
-body {
+html, body {
   margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 #root {
   width: 100%;
-  min-height: 100svh;
+  height: 100svh;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
 }
+
 
 h1, h2, h3 {
   font-family: var(--mono);

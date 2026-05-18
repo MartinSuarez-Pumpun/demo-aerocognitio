@@ -95,7 +95,6 @@ export default function SpatialMemoryBlock() {
   const [trials] = useState(() => buildTrials())
   const [trialIdx, setTrialIdx] = useState(0)
   const [phase, setLocalPhase] = useState('memorize') // memorize | recall | result
-  const memorizeSecs = trial?.isPractice ? MEMORIZE_PRACTICE : MEMORIZE_REAL
   const [countdown, setCountdown] = useState(MEMORIZE_PRACTICE)
   const [userSelected, setUserSelected] = useState(new Set())
   const [score, setScore] = useState(null)
