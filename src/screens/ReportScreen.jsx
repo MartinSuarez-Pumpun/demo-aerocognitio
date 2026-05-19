@@ -29,12 +29,19 @@ function DimCard({ id, data }) {
   )
 }
 
-export default function ReportScreen() {
+export default function ReportScreen({ onPluginComplete }) {
   const { report, reportError, sessionId, targetRole, mr, so, sm, sessionStart, reset, setPhase } = useStore()
 
   function handleNewSession() {
     reset()
     setPhase('welcome')
+  }
+
+  function handleReturnToSystem() {
+    const metrics = computeMetrics({ mr, so, sm, sessionStart })
+    const result = { type: 'aerocognitio', sessionId, role: targetRole, metrics, report }
+    reset()
+    onPluginComplete?.(result)
   }
 
   function handleExport() {
@@ -161,6 +168,11 @@ export default function ReportScreen() {
       <div className="actions">
         <button className="btn btn-ghost" type="button" onClick={handleExport}>Exportar JSON</button>
         <button className="btn btn-primary" type="button" onClick={handleNewSession}>Nueva sesión</button>
+        {onPluginComplete && (
+          <button className="btn btn-primary" type="button" onClick={handleReturnToSystem}>
+            Volver al sistema
+          </button>
+        )}
       </div>
     </div>
   )

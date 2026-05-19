@@ -1,0 +1,53 @@
+/*
+ * Scoped CSS for AeroCognitio running as a plugin inside INNOVADEF-2026.
+ *
+ * index.css defines these vars on :root (only loaded when running standalone).
+ * Here we scope them to the plugin wrapper so child components get them
+ * without polluting the host app's :root.
+ */
+
+.aerocognitio-plugin {
+  /* ── Design tokens ─────────────────────────────────────── */
+  --bg:            #070707;
+  --bg-panel:      #0d0d0d;
+  --bg-card:       #0a0a0a;
+  --border:        rgba(0, 255, 65, 0.22);
+  --border-dim:    rgba(0, 255, 65, 0.10);
+  --text:          rgba(0, 255, 65, 0.65);
+  --text-h:        #00FF41;
+  --accent:        #00FF41;
+  --accent-dim:    rgba(0, 255, 65, 0.22);
+  --accent-border: rgba(0, 255, 65, 0.40);
+  --green:         #00FF41;
+  --green-dim:     rgba(0, 255, 65, 0.08);
+  --red:           #FF2B2B;
+  --red-dim:       rgba(255, 43, 43, 0.10);
+  --shadow:        0 8px 32px rgba(0,0,0,0.8);
+  --mono:          'Share Tech Mono', 'Courier New', monospace;
+  --sans:          'Share Tech Mono', 'Courier New', monospace;
+
+  /* ── Layout — fit inside INNOVADEF content area ────────── */
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--mono);
+  font-size: 30px;
+  line-height: 150%;
+  letter-spacing: -1px;
+  text-transform: uppercase;
+  color: var(--text);
+  /* No background: INNOVADEF provides it */
+}
+
+/* Override .app-shell when embedded (no fixed height, no overflow:hidden) */
+.aerocognitio-plugin .app-shell {
+  height: auto;
+  min-height: 100%;
+  overflow: visible;
+}
+
+.aerocognitio-plugin .app-content {
+  overflow: visible;
+  height: auto;
+}
