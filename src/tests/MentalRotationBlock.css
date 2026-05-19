@@ -4,9 +4,9 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  padding: 0 16px;
+  padding: 0 24px;
   box-sizing: border-box;
-  gap: 20px;
+  gap: 28px;
   animation: fadeIn 0.4s ease;
 }
 
@@ -14,30 +14,28 @@
   text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 }
 
 .mr-label {
   font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.18em;
+  font-size: 30px;
   text-transform: uppercase;
   color: var(--accent);
 }
 
 .mr-progress {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 20px;
   color: var(--text);
   opacity: 0.6;
 }
 
 .mr-practice-badge {
   font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.12em;
+  font-size: 15px;
   text-transform: uppercase;
-  padding: 3px 10px;
+  padding: 5px 16px;
   border: 1px solid var(--accent-border);
   color: var(--accent);
   background: var(--accent-dim);
@@ -47,14 +45,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
-  width: 400px;
+  gap: 8px;
+  width: 700px;
   max-width: 90vw;
 }
 
 .mr-timer-track {
   width: 100%;
-  height: 3px;
+  height: 4px;
   background: var(--border);
   overflow: hidden;
 }
@@ -68,22 +66,19 @@
 
 .mr-timer-secs {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 22px;
   color: var(--text);
   opacity: 0.8;
 }
 .mr-timer-secs.danger { color: var(--red); opacity: 1; }
-.mr-timer-hint { opacity: 0.45; margin-left: 6px; }
+.mr-timer-hint { opacity: 0.45; margin-left: 8px; }
 
 /* ── Layout referencia + opciones ────────────────────── */
 .mr-layout {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 32px;
-}
-
-@media (max-width: 700px) {
-  .mr-layout { flex-direction: column; gap: 20px; }
+  gap: 36px;
 }
 
 /* Referencia */
@@ -91,13 +86,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .mr-canvas-label {
   font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 0.14em;
+  font-size: 14px;
   text-transform: uppercase;
   color: var(--text);
   opacity: 0.5;
@@ -109,8 +103,8 @@
 }
 
 .mr-canvas--ref {
-  width: 220px;
-  height: 220px;
+  width: 420px;
+  height: 420px;
 }
 
 /* Separador central */
@@ -122,15 +116,9 @@
   color: var(--text);
   opacity: 0.4;
   font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.08em;
+  font-size: 18px;
   text-transform: uppercase;
-  writing-mode: vertical-rl;
-  max-height: 200px;
-}
-
-@media (max-width: 700px) {
-  .mr-divider { writing-mode: horizontal-tb; max-height: none; }
+  writing-mode: horizontal-tb;
 }
 
 /* Grid de opciones */
@@ -138,24 +126,23 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: 18px;
 }
 
 .mr-options {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 14px;
 }
 
 .mr-confirm {
   font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: 0.10em;
+  font-size: 36px;
   text-transform: uppercase;
-  padding: 10px 28px;
-  border: 1.5px solid var(--accent-border);
+  padding: 28px 44px;
+  border: 1.5px solid #fa0;
   background: var(--accent-dim);
-  color: var(--accent);
+  color: #fa0;
   cursor: pointer;
   transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
   width: 100%;
@@ -163,8 +150,9 @@
 
 .mr-confirm:hover:not(.disabled) {
   background: rgba(0,255,65,0.13);
-  border-color: var(--accent);
-  box-shadow: inset 0 0 45px rgba(0,255,65,0.04);
+  border-color: #ffa040;
+  color: #ffa040;
+  box-shadow: inset 0 0 45px rgba(255,102,0,0.08);
 }
 
 .mr-confirm.disabled {
@@ -176,16 +164,17 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   background: transparent;
   border: 2px solid var(--border);
-  padding: 8px;
+  padding: 10px;
   cursor: pointer;
-  transition: border-color 0.15s, background 0.15s;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
 }
 
 .mr-option:hover:not(:disabled) {
-  border-color: var(--accent-border);
+  border-color: var(--accent-border);;
+  color: #ffa040;
   background: var(--accent-dim);
 }
 
@@ -206,9 +195,8 @@
 
 .mr-option-label {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 20px;
   font-weight: 600;
-  letter-spacing: 0.1em;
   color: var(--text);
 }
 
@@ -217,8 +205,8 @@
 .mr-option.wrong    .mr-option-label { color: var(--red); }
 
 .mr-canvas--opt {
-  width: 150px;
-  height: 150px;
+  width: 260px;
+  height: 260px;
 }
 
 @keyframes fadeIn {

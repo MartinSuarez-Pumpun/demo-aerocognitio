@@ -4,7 +4,7 @@ import './PlasmaSphere.css'
 
 // Ported from .references/innovadef_plasma_sphere_final.html
 // Added u_speak uniform: 0-1, drives extra displacement + brightness when speaking
-export default function PlasmaSphere({ speakIntensity = 0 }) {
+export default function PlasmaSphere({ speakIntensity = 0, freqDataRef = null }) {
   const canvasRef = useRef(null)
   const speakRef = useRef(speakIntensity)
 
@@ -25,11 +25,12 @@ export default function PlasmaSphere({ speakIntensity = 0 }) {
     camera.position.z = 3.2
 
     const vs = `
-      uniform float u_time;
-      uniform float u_speak;
-      varying vec3  vNormal;
-      varying float vDisp;
-      varying float vSpeak;
+      uniform float     u_time;
+      uniform float     u_speak;
+      uniform sampler2D u_freqTex;
+      varying vec3      vNormal;
+      varying float     vDisp;
+      varying float     vSpeak;
 
       vec3 mod289(vec3 x){return x-floor(x*(1./289.))*289.;}
       vec4 mod289(vec4 x){return x-floor(x*(1./289.))*289.;}
@@ -68,8 +69,26 @@ export default function PlasmaSphere({ speakIntensity = 0 }) {
         float n3 = snoise(position*5.5+vec3(t*0.3,-t*0.4,t*0.7));
         float baseDisp = n1*0.22+n2*0.10+n3*0.04;
 
-        // Speaking: rhythmic surface pulse synced to voice frequency
-        float speakPulse = u_speak * (0.06 + 0.14 * sin(u_time * 9.5 + position.y * 5.0 + position.x * 3.0));
+        // Speaking: circular sound-bar — N discrete spikes around equator, each with its own frequency
+        float PI2   = 6.28318;
+        float bars  = 24.0;
+        // Angle around Z axis (camera-facing) — gives the circular soundbar ring
+        float phi   = atan(position.y, position.x);
+        float barF  = (phi + 3.14159) / PI2 * bars;
+        float barI  = floor(barF);
+        float barFrac = fract(barF) - 0.5;                    // -0.5..0.5 within bar
+
+        // Sample real frequency data — each bar maps to its bin in the texture
+        float texU = (barI + 0.5) / bars;
+        float amp  = clamp(texture2D(u_freqTex, vec2(texU, 0.5)).r * 2.8, 0.0, 1.0);
+
+        // Narrow the bar — clear gaps between bars
+        float barEdge = max(0.0, 1.0 - abs(barFrac) * 5.5);
+
+        // Fade toward Z poles so bars don't clump at front/back of sphere
+        float depthFade = max(0.0, 1.0 - abs(position.z) * 2.2);
+
+        float speakPulse = u_speak * amp * barEdge * depthFade * 0.50;
 
         vDisp   = baseDisp + speakPulse;
         vSpeak  = u_speak;
@@ -104,12 +123,20 @@ export default function PlasmaSphere({ speakIntensity = 0 }) {
       }
     `
 
+    // 1-D texture: 24 pixels (one per bar), R channel = frequency amplitude 0-255
+    const N_BARS   = 24
+    const texData  = new Uint8Array(N_BARS * 4)   // RGBA, only R used
+    const freqTex  = new THREE.DataTexture(texData, N_BARS, 1, THREE.RGBAFormat)
+    freqTex.magFilter = THREE.LinearFilter
+    freqTex.needsUpdate = true
+
     const geo = new THREE.IcosahedronGeometry(1, 80)
     const mat = new THREE.ShaderMaterial({
       vertexShader: vs, fragmentShader: fs,
       uniforms: {
-        u_time:  { value: 0 },
-        u_speak: { value: 0 },
+        u_time:    { value: 0 },
+        u_speak:   { value: 0 },
+        u_freqTex: { value: freqTex },
       },
       transparent: true, depthWrite: false,
       blending: THREE.AdditiveBlending, side: THREE.DoubleSide,
@@ -157,15 +184,30 @@ export default function PlasmaSphere({ speakIntensity = 0 }) {
       h1.uniforms.u_sp.value     = smoothSpeak
       h2.uniforms.u_sp.value     = smoothSpeak
 
-      // Faster, more energetic rotation when speaking
-      const boost = 1 + smoothSpeak * 4
-      rotVX += (Math.random() - 0.5) * 0.000012 * boost
-      rotVY += (Math.random() - 0.5) * 0.000012 * boost
+      // Update frequency texture from real analyser data
+      const src = freqDataRef?.current
+      if (src && src.length > 0) {
+        // Map N_BARS bars to the lower speech range (first 40% of bins)
+        const srcRange = Math.floor(src.length * 0.4)
+        for (let i = 0; i < N_BARS; i++) {
+          const lo  = Math.floor(i / N_BARS * srcRange)
+          const hi  = Math.max(lo + 1, Math.floor((i + 1) / N_BARS * srcRange))
+          let sum = 0
+          for (let j = lo; j < hi; j++) sum += src[j]
+          texData[i * 4] = sum / (hi - lo)   // R channel
+        }
+        freqTex.needsUpdate = true
+      }
+
+      // Slow rotation when speaking so sound bars read clearly; gentle drift otherwise
+      const rotScale = 1 - smoothSpeak * 0.88   // nearly stops at full speak
+      rotVX += (Math.random() - 0.5) * 0.000008
+      rotVY += (Math.random() - 0.5) * 0.000008
       rotVX *= 0.999
       rotVY *= 0.999
 
-      rotX += rotVX * boost
-      rotY += rotVY * boost
+      rotX += rotVX * rotScale
+      rotY += rotVY * rotScale
 
       scene.children.forEach(c => { c.rotation.x = rotX; c.rotation.y = rotY })
       renderer.render(scene, camera)
@@ -183,6 +225,7 @@ export default function PlasmaSphere({ speakIntensity = 0 }) {
       renderer.dispose()
       geo.dispose()
       mat.dispose()
+      freqTex.dispose()
     }
   }, [])
 

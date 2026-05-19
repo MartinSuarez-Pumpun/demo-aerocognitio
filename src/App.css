@@ -25,8 +25,7 @@
 /* ── Shared utility ─────────────────────────────────────── */
 .hud-label {
   font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.14em;
+  font-size: 20px;
   text-transform: uppercase;
   color: var(--text);
 }
@@ -36,7 +35,7 @@
   color: var(--red);
   border-color: rgba(255, 82, 82, 0.4);
 }
-.btn-danger:hover { background: rgba(255, 82, 82, 0.25); }
+.btn-danger:hover { background: rgba(255, 82, 82, 0.25); border-color: #ffa040; color: #ffa040; }
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(4px); }
@@ -67,10 +66,10 @@
 .app {
   max-width: 960px;
   margin: 0 auto;
-  padding: 32px 24px 64px;
+  padding: 56px 48px 96px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 40px;
 }
 
 /* ── Header ─────────────────────────────────────────────── */
@@ -78,19 +77,18 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 20px;
+  padding: 20px 32px;
   border: 1px solid var(--border);
   background: var(--bg-panel);
   font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
+  font-size: 20px;
   text-transform: uppercase;
 }
 
 .hud-header .brand {
   color: var(--accent);
   font-weight: 600;
-  font-size: 13px;
+  font-size: 36px;
 }
 
 .hud-header .meta {
@@ -104,8 +102,8 @@
 
 .status-dot {
   display: inline-block;
-  width: 7px;
-  height: 7px;
+  width: 11px;
+  height: 11px;
   background: var(--green);
   box-shadow: 0 0 6px var(--green);
   margin-right: 6px;
@@ -129,15 +127,14 @@
 
 .headline-card .label {
   font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.12em;
+  font-size: 20px;
   text-transform: uppercase;
   color: var(--accent);
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .headline-card h1 {
-  font-size: 20px;
+  font-size: 44px;
   font-weight: 500;
   line-height: 135%;
   color: var(--text-h);
@@ -146,36 +143,31 @@
 /* ── Dimension grid ─────────────────────────────────────── */
 .dim-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-}
-
-@media (max-width: 640px) {
-  .dim-grid { grid-template-columns: 1fr; }
+  grid-template-columns: 1fr;
+  gap: 20px;
 }
 
 .dim-card {
   border: 1px solid var(--border);
   background: var(--bg-card);
-  padding: 18px 20px;
+  padding: 36px 36px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 14px;
 }
 
 .dim-card .dim-label {
   font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.1em;
+  font-size: 20px;
   text-transform: uppercase;
   color: var(--text);
 }
 
 .dim-card .dim-level {
   font-family: var(--mono);
-  font-size: 13px;
+  font-size: 24px;
   font-weight: 600;
-  padding: 3px 10px;
+  padding: 4px 14px;
   display: inline-block;
   width: fit-content;
 }
@@ -200,7 +192,7 @@
 .fill-low    { background: var(--red); width: 28%; }
 
 .dim-card .dim-comment {
-  font-size: 13px;
+  font-size: 22px;
   line-height: 145%;
   color: var(--text);
 }
@@ -208,12 +200,8 @@
 /* ── Two-column section ─────────────────────────────────── */
 .two-col {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-
-@media (max-width: 640px) {
-  .two-col { grid-template-columns: 1fr; }
+  grid-template-columns: 1fr;
+  gap: 20px;
 }
 
 /* ── Narrative card ─────────────────────────────────────── */
@@ -228,16 +216,15 @@
 
 .card-title {
   font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.12em;
+  font-size: 20px;
   text-transform: uppercase;
   color: var(--text);
-  padding-bottom: 10px;
+  padding-bottom: 14px;
   border-bottom: 1px solid var(--border-dim);
 }
 
 .narrative-card p {
-  font-size: 14px;
+  font-size: 24px;
   line-height: 160%;
   color: var(--text);
 }
@@ -254,13 +241,12 @@
 
 .role-card .role-name {
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 24px;
   color: var(--accent);
-  letter-spacing: 0.06em;
 }
 
 .role-card .role-summary {
-  font-size: 14px;
+  font-size: 24px;
   line-height: 150%;
   color: var(--text-h);
 }
@@ -274,14 +260,14 @@
 .tag-row {
   display: flex;
   align-items: flex-start;
-  gap: 8px;
-  font-size: 13px;
+  gap: 12px;
+  font-size: 22px;
   line-height: 140%;
 }
 
 .tag-row .bullet {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 20px;
   margin-top: 2px;
   flex-shrink: 0;
 }
@@ -300,7 +286,7 @@
 }
 
 .rec-card p {
-  font-size: 14px;
+  font-size: 24px;
   line-height: 160%;
   color: var(--text-h);
 }
@@ -308,9 +294,9 @@
 /* ── Disclaimer ─────────────────────────────────────────── */
 .disclaimer {
   border: 1px solid var(--border-dim);
-  padding: 12px 18px;
+  padding: 20px 28px;
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 20px;
   line-height: 160%;
   color: var(--text);
   opacity: 0.6;
@@ -319,37 +305,40 @@
 /* ── Actions ────────────────────────────────────────────── */
 .actions {
   display: flex;
+  flex-direction: column;
   gap: 12px;
-  justify-content: flex-end;
 }
 
 .btn {
   font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: 0.10em;
+  font-size: 22px;
   text-transform: uppercase;
-  padding: 10px 20px;
-  border: 1.5px solid var(--accent-border);
+  padding: 18px 36px;
+  border: 1.5px solid #fa0;
   cursor: pointer;
   transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
   background: var(--bg-card);
-  color: var(--accent);
+  color: #fa0;
 }
 
 .btn-primary {
   background: rgba(0,255,65,0.07);
-  color: var(--accent);
-  border-color: var(--accent-border);
+  color: #fa0;
+  border-color: #fa0;
+  width: 30%;
+  font-size: 25px;
+  padding: 18px 36px;
 }
 .btn-primary:hover {
   background: rgba(0,255,65,0.13);
-  border-color: var(--accent);
-  box-shadow: inset 0 0 45px rgba(0,255,65,0.04);
+  border-color: #ffd140;
+  color: #ffd140;
+  box-shadow: inset 0 0 45px rgba(255,102,0,0.08);
 }
 
 .btn-ghost {
   background: transparent;
-  color: var(--text);
-  border-color: var(--border);
+  color: #fa0;
+  border-color: #fa0;
 }
-.btn-ghost:hover { border-color: var(--accent-border); color: var(--text-h); }
+.btn-ghost:hover { border-color: #ffa040; color: #ffa040; }

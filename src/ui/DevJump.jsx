@@ -69,9 +69,9 @@ export default function DevJump() {
   const jumps = [
     { label: 'welcome',     action: () => devJump('welcome') },
     { label: 'roles',       action: () => devJump('roleSelection') },
-    { label: 'prueba MR',   action: () => devJump('mr') },
-    { label: 'prueba SO',   action: () => devJump('so') },
-    { label: 'prueba SM',   action: () => devJump('sm') },
+    { label: 'prueba MR',   action: () => devJump('mrInstructions') },
+    { label: 'prueba SO',   action: () => devJump('soInstructions') },
+    { label: 'prueba SM',   action: () => devJump('smInstructions') },
     { label: 'processing',  action: () => devJump('processing') },
     { label: 'reportIntro', action: jumpReportIntro, key: 'reportIntro' },
     { label: 'report',      action: () => devJump('report', mockBase) },

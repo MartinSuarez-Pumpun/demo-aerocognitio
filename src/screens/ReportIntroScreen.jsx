@@ -18,6 +18,7 @@ export default function ReportIntroScreen() {
   const audioCtxRef    = useRef(null)
   const analyserRafRef = useRef(null)
   const typewriterRef  = useRef(null)
+  const freqDataRef    = useRef(null)   // Uint8Array — raw frequency bins, read by PlasmaSphere
 
   function cleanup() {
     cancelledRef.current = true
@@ -44,10 +45,12 @@ export default function ReportIntroScreen() {
 
   // ── Web Audio analyser loop ───────────────────────────────────────────────
   function startAnalyser(analyser) {
+    analyser.fftSize = 256                                 // 128 usable bins
     const data = new Uint8Array(analyser.frequencyBinCount)
     function loop() {
       if (cancelledRef.current) return
       analyser.getByteFrequencyData(data)
+      freqDataRef.current = data                          // share raw bins with PlasmaSphere
       const slice = data.slice(0, Math.floor(data.length * 0.4))
       const avg   = slice.reduce((a, b) => a + b, 0) / slice.length
       setSpeakIntensity(Math.min(avg / 60, 1))
@@ -174,7 +177,7 @@ export default function ReportIntroScreen() {
       </div>
 
       <div className="report-intro-sphere-wrap">
-        <PlasmaSphere speakIntensity={speakIntensity} />
+        <PlasmaSphere speakIntensity={speakIntensity} freqDataRef={freqDataRef} />
       </div>
 
       {reportSummary && (

@@ -9,28 +9,23 @@
  * Server → client: {"type":"audio.delta","delta":"<base64 mp3>"} then {"type":"audio.done"}
  */
 export function streamTTS(text, { onChunk, onDone, onError }) {
-  const key = import.meta.env.VITE_XAI_API_KEY
-  if (!key) { onError(new Error('VITE_XAI_API_KEY not set')); return () => {} }
-
   const params = new URLSearchParams({
     language:                   'es',
-    voice:                      'eve',
+    voice_id:                   'yis75yfp',
     codec:                      'mp3',
     sample_rate:                '24000',
     bit_rate:                   '128000',
     optimize_streaming_latency: '1',
   })
 
-  const wsUrl = import.meta.env.DEV
-    ? `/ws-tts?${params}`
-    : `wss://api.x.ai/v1/tts?${params}&api_key=${key}`
+  const wsUrl = `/ws-tts?${params}`
 
   const ws = new WebSocket(wsUrl)
   ws.binaryType = 'arraybuffer'
   let done = false
 
   ws.onopen = () => {
-    ws.send(JSON.stringify({ type: 'text.delta', delta: text }))
+    ws.send(JSON.stringify({ type: 'text.delta', delta: "<fast>"+text+"</fast>" }))
     ws.send(JSON.stringify({ type: 'text.done' }))
   }
 

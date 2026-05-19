@@ -17,7 +17,7 @@ const Schema = z.object({
   disclaimer: z.string(),
 })
 
-const SYSTEM = `Eres un evaluador especializado en selección de personal aeronáutico y de sistemas no tripulados (RPAS) para Fuerzas Armadas. Tu función es interpretar los resultados de una batería psicotécnica corta (3 pruebas: rotación mental, orientación espacial, memoria espacial táctica) y emitir un informe descriptivo de aptitud para un rol objetivo específico.
+const SYSTEM = `Eres un evaluador especializado en selección de personal aeronáutico y de sistemas no tripulados (RPAS) para Fuerzas Armadas. Tu función es interpretar los resultados de una batería psicotécnica corta (3 pruebas: rotación mental 3D, orientación espacial con actitud y rumbo magnético, detección de cambios en mapa táctico) y emitir un informe descriptivo de aptitud para un rol objetivo específico.
 
 REGLAS INNEGOCIABLES:
 
@@ -57,8 +57,8 @@ Rol objetivo: ${role}
 
 Métricas observadas:
 - Rotación mental: precisión ${m.mr_accuracy.toFixed(2)}, RT media ${Math.round(m.mr_meanReactionMs)} ms, pendiente RT/ángulo ${m.mr_rtSlopeMsPerDeg.toFixed(1)} ms/grado, consistencia ${m.mr_consistencyScore.toFixed(2)}
-- Orientación espacial: precisión ${m.so_accuracy.toFixed(2)}, RT media ${Math.round(m.so_meanReactionMs)} ms, tasa de vacilación ${m.so_hesitationRate.toFixed(2)}
-- Memoria espacial: precisión de posición ${m.sm_positionRecallRate.toFixed(2)}, precisión de tipo ${m.sm_typeRecallRate.toFixed(2)}, capacidad media ${m.sm_capacity.toFixed(1)} objetos
+- Orientación espacial (actitud + rumbo): precisión ${m.so_accuracy.toFixed(2)}, RT media ${Math.round(m.so_meanReactionMs)} ms, tasa de vacilación ${m.so_hesitationRate.toFixed(2)}
+- Memoria espacial (detección de cambios en mapa táctico): tasa de detección ${m.sm_changeDetectionRate.toFixed(2)}, tasa de falsos positivos ${m.sm_falsePositiveRate.toFixed(2)}, capacidad media ${m.sm_capacity.toFixed(1)} cambios detectados
 
 Resumen global: ${m.totalItems} ítems, precisión global ${m.overallAccuracy.toFixed(2)}, duración ${m.sessionDurationMs} ms.
 

@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 
 const initial = {
-  phase: 'welcome', // welcome | roleSelection | mrInstructions | mr | soInstructions | so | smInstructions | sm | processing | report
+  phase: 'welcome', // welcome | roleSelection | mrInstructions | mr | soInstructions | so | smInstructions | sm | processing | reportIntro | report
   targetRole: null,
   sessionId: null,
   sessionStart: null,
@@ -10,6 +10,8 @@ const initial = {
   sm: { trials: [] },
   report: null,
   reportError: false,
+  reportSummary: null,
+  reportAudioUrl: null,
 }
 
 export const useStore = create((set) => ({
@@ -25,5 +27,8 @@ export const useStore = create((set) => ({
   addSMTrial: (t) => set(s => ({ sm: { trials: [...s.sm.trials, t] } })),
   setReport: (report) => set({ report }),
   setReportError: (reportError) => set({ reportError }),
+  setReportSummary: (reportSummary) => set({ reportSummary }),
+  setReportAudioUrl: (reportAudioUrl) => set({ reportAudioUrl }),
+  devJump: (phase, data = {}) => set({ ...initial, phase, ...data }),
   reset: () => set(initial),
 }))

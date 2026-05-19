@@ -4,14 +4,13 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  gap: 32px;
+  gap: 40px;
   animation: fadeIn 0.5s ease;
 }
 
 .processing-logo {
   font-family: var(--mono);
-  font-size: 13px;
-  letter-spacing: 0.15em;
+  font-size: 20px;
   text-transform: uppercase;
   color: var(--accent);
   opacity: 0.8;
@@ -19,13 +18,13 @@
 
 .processing-spinner {
   display: flex;
-  gap: 10px;
+  gap: 14px;
   align-items: center;
 }
 
 .processing-dot {
-  width: 10px;
-  height: 10px;
+  width: 16px;
+  height: 16px;
   background: var(--accent);
   animation: pulseDot 1.4s ease-in-out infinite;
 }
@@ -42,17 +41,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: 0.1em;
+  font-size: 18px;
   text-transform: uppercase;
   color: var(--text);
 }
 
 .processing-progress-track {
-  width: 280px;
-  height: 3px;
+  width: 420px;
+  height: 4px;
   background: var(--border);
   overflow: hidden;
 }
@@ -60,31 +58,24 @@
 .processing-progress-fill {
   height: 100%;
   background: var(--accent);
-  animation: progressAnim 4s ease-in-out forwards;
-}
-
-@keyframes progressAnim {
-  0%   { width: 0%; }
-  40%  { width: 60%; }
-  70%  { width: 80%; }
-  90%  { width: 92%; }
-  100% { width: 100%; }
+  width: 0%;
+  transition: width 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .processing-steps {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  max-width: 320px;
+  gap: 10px;
+  max-width: 480px;
   width: 100%;
 }
 
 .processing-step-row {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 17px;
   color: var(--text);
   opacity: 0.6;
 }
@@ -95,14 +86,14 @@
 }
 
 .processing-step-icon {
-  width: 16px;
-  height: 16px;
+  width: 22px;
+  height: 22px;
   border: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  font-size: 8px;
+  font-size: 12px;
 }
 
 .processing-step-row.active .processing-step-icon {
@@ -114,4 +105,13 @@
 @keyframes fadeIn {
   from { opacity: 0; }
   to   { opacity: 1; }
+}
+
+.processing-screen.exiting {
+  animation: fadeOut 0.42s ease forwards;
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; transform: scale(1); }
+  to   { opacity: 0; transform: scale(0.97); }
 }

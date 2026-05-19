@@ -12,54 +12,50 @@
 
 .role-selection-title {
   font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.15em;
+  font-size: 22px;
   text-transform: uppercase;
   color: var(--accent);
   text-align: center;
 }
 
 .role-selection-heading {
-  font-size: 22px;
+  font-size: 48px;
   font-weight: 600;
   color: var(--text-h);
   text-align: center;
-  margin-top: 4px;
+  margin-top: 6px;
 }
 
 .role-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  grid-template-columns: 1fr;
+  gap: 24px;
   width: 100%;
-  max-width: 720px;
-}
-
-@media (max-width: 560px) {
-  .role-grid { grid-template-columns: 1fr; }
+  max-width: 860px;
 }
 
 .role-card-btn {
   background: var(--bg-panel);
   border: 1.5px solid var(--border);
-  padding: 20px;
+  padding: 32px;
   cursor: pointer;
   text-align: left;
-  transition: border-color 0.2s, background 0.2s;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 16px;
+  color: #fa0;
 }
 
 .role-card-btn:hover {
   border-color: var(--accent-border);
+  color: #ffa040;
   background: var(--accent-dim);
 }
 
 .role-card-id {
   font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 0.15em;
+  font-size: 18px;
   text-transform: uppercase;
   color: var(--text);
   opacity: 0.6;
@@ -67,14 +63,13 @@
 
 .role-card-name {
   font-family: var(--mono);
-  font-size: 14px;
+  font-size: 28px;
   font-weight: 600;
   color: var(--accent);
-  letter-spacing: 0.05em;
 }
 
 .role-card-desc {
-  font-size: 13px;
+  font-size: 22px;
   color: var(--text);
   line-height: 145%;
 }
@@ -89,22 +84,21 @@
 .role-dim-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 16px;
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 20px;
 }
 
 .role-dim-label {
   color: var(--text);
   opacity: 0.7;
-  min-width: 130px;
+  min-width: 260px;
 }
 
 .role-dim-chip {
-  padding: 2px 8px;
-  font-size: 10px;
+  padding: 4px 16px;
+  font-size: 18px;
   font-weight: 600;
-  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 

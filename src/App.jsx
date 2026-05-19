@@ -1,8 +1,10 @@
 import { useStore } from './core/store'
+import DevJump from './ui/DevJump'
 import WelcomeScreen from './screens/WelcomeScreen'
 import RoleSelectionScreen from './screens/RoleSelectionScreen'
 import TransitionScreen from './screens/TransitionScreen'
 import ProcessingScreen from './screens/ProcessingScreen'
+import ReportIntroScreen from './screens/ReportIntroScreen'
 import ReportScreen from './screens/ReportScreen'
 import MentalRotationBlock from './tests/MentalRotationBlock'
 import SpatialOrientationBlock from './tests/SpatialOrientationBlock'
@@ -13,35 +15,37 @@ import './App.css'
 
 const MR_INSTRUCTIONS = {
   title: 'PRUEBA 1 · ROTACIÓN MENTAL',
-  description: 'Se mostrarán dos figuras. Indica si son la misma figura rotada o una figura diferente.',
+  description: 'Se mostrará una figura 3D de referencia y cuatro opciones rotadas. Identifica cuáles dos son la misma figura.',
   items: [
     'Primero harás un ítem de práctica que no cuenta',
-    'Selecciona las 2 figuras que son la misma que la referencia (solo rotadas)',
+    'Selecciona exactamente 2 figuras que sean idénticas a la referencia (solo rotadas, no espejadas)',
     'Tienes 12 segundos por ítem',
   ],
 }
 
 const SO_INSTRUCTIONS = {
   title: 'PRUEBA 2 · ORIENTACIÓN ESPACIAL',
-  description: 'Se mostrará un indicador de actitud de vuelo. Selecciona la imagen que corresponde a la vista exterior.',
+  description: 'Se mostrarán dos instrumentos de vuelo: el indicador de actitud (ADI) y el compás de rumbo (HSI). Identifica qué vista exterior corresponde a ambos.',
   items: [
     'Primero harás un ítem de práctica que no cuenta',
-    'Lee el indicador de horizonte artificial e identifica pitch y roll',
-    'Selecciona la vista exterior correcta entre 4 opciones',
+    'El ADI puede aparecer girado en pantalla — debes reorientarte para leerlo correctamente',
+    'Cada opción muestra una vista exterior con su horizonte y rumbo magnético',
+    'Selecciona la vista que coincide con los dos instrumentos',
   ],
 }
 
 const SM_INSTRUCTIONS = {
   title: 'PRUEBA 3 · MEMORIA ESPACIAL TÁCTICA',
-  description: 'Memoriza la posición de elementos tácticos en el grid. Después deberás recordar dónde estaban.',
+  description: 'Observa un mapa táctico, luego se mostrará brevemente una versión modificada. Detecta qué ha cambiado.',
   items: [
     'Primero harás un ítem de práctica que no cuenta',
-    'Memoriza las posiciones de los elementos durante 5 segundos',
-    'Indica en qué celdas había elementos',
+    'Memoriza el mapa durante 8 segundos',
+    'Se mostrará el mapa modificado durante 3 segundos — un símbolo habrá cambiado de posición',
+    'Marca la celda donde apareció el símbolo nuevo',
   ],
 }
 
-export default function App() {
+export default function App({ onPluginComplete, pluginMode = false }) {
   const phase = useStore(s => s.phase)
   const setPhase = useStore(s => s.setPhase)
 
@@ -55,16 +59,18 @@ export default function App() {
     smInstructions: <TransitionScreen {...SM_INSTRUCTIONS} onReady={() => setPhase('sm')} />,
     sm:             <SpatialMemoryBlock />,
     processing:     <ProcessingScreen />,
-    report:         <ReportScreen />,
+    reportIntro:    <ReportIntroScreen />,
+    report:         <ReportScreen onPluginComplete={onPluginComplete} />,
   }
 
   return (
     <div className="app-shell">
-      <MilitaryBackground />
-      <MouseGlow />
+      {!pluginMode && <MilitaryBackground />}
+      {!pluginMode && <MouseGlow />}
       <div className="app-content">
         {screens[phase] ?? <WelcomeScreen />}
       </div>
+      {import.meta.env.VITE_DEV_JUMP === 'true' && <DevJump />}
     </div>
   )
 }

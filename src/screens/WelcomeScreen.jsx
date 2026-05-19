@@ -39,7 +39,7 @@ export default function WelcomeScreen() {
           </div>
         </div>
       </div>
-
+    <div className="welcome-divider" />
       <button className="btn btn-primary" type="button" onClick={handleStart}>
         INICIAR EVALUACIÓN
       </button>

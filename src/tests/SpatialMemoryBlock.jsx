@@ -2,11 +2,13 @@ import { useState, useEffect, useRef } from 'react'
 import { useStore } from '../core/store'
 import './SpatialMemoryBlock.css'
 
-const GRID_SIZE = 5
-const NUM_TARGETS = 4
-const NUM_TRIALS = 4
-const MEMORIZE_PRACTICE = 10
-const MEMORIZE_REAL     = 5
+const GRID_SIZE          = 5
+const NUM_TARGETS        = 4
+const NUM_TRIALS         = 4
+const NUM_CHANGES        = 1
+const MEMORIZE_PRACTICE  = 12
+const MEMORIZE_REAL      = 8
+const CHANGE_REVEAL_TIME = 3
 
 const SYMBOL_TYPES = ['infantry', 'armor', 'air', 'hostile', 'waypoint']
 
@@ -69,8 +71,13 @@ function randomPositions(n, gridSize) {
   for (let r = 0; r < gridSize; r++)
     for (let c = 0; c < gridSize; c++)
       all.push(r * gridSize + c)
-  const shuffled = all.sort(() => Math.random() - 0.5)
-  return shuffled.slice(0, n)
+  return all.sort(() => Math.random() - 0.5).slice(0, n)
+}
+
+function randomPositionNotIn(occupied, gridSize) {
+  const all = Array.from({ length: gridSize * gridSize }, (_, i) => i)
+  const available = all.filter(p => !occupied.has(p))
+  return available[Math.floor(Math.random() * available.length)]
 }
 
 function makeTrial(isPractice = false) {
@@ -78,7 +85,26 @@ function makeTrial(isPractice = false) {
   const types = Array.from({ length: NUM_TARGETS }, () =>
     SYMBOL_TYPES[Math.floor(Math.random() * SYMBOL_TYPES.length)]
   )
-  return { positions, types, isPractice }
+
+  // Pick NUM_CHANGES symbols to move
+  const indices = Array.from({ length: NUM_TARGETS }, (_, i) => i)
+    .sort(() => Math.random() - 0.5)
+    .slice(0, NUM_CHANGES)
+
+  const modifiedPositions = [...positions]
+  const occupied = new Set(positions)
+
+  for (const idx of indices) {
+    occupied.delete(modifiedPositions[idx])
+    const newPos = randomPositionNotIn(occupied, GRID_SIZE)
+    occupied.add(newPos)
+    modifiedPositions[idx] = newPos
+  }
+
+  // changedCells: only the new position(s) where symbols appeared
+  const changedCells = indices.map(i => modifiedPositions[i])
+
+  return { positions, types, modifiedPositions, changedCells, isPractice }
 }
 
 function buildTrials() {
@@ -90,27 +116,29 @@ function buildTrials() {
 
 export default function SpatialMemoryBlock() {
   const addSMTrial = useStore(s => s.addSMTrial)
-  const setPhase = useStore(s => s.setPhase)
+  const setPhase   = useStore(s => s.setPhase)
 
-  const [trials] = useState(() => buildTrials())
-  const [trialIdx, setTrialIdx] = useState(0)
-  const [phase, setLocalPhase] = useState('memorize') // memorize | recall | result
-  const [countdown, setCountdown] = useState(MEMORIZE_PRACTICE)
+  const [trials]                      = useState(() => buildTrials())
+  const [trialIdx, setTrialIdx]       = useState(0)
+  const [phase, setLocalPhase]        = useState('memorize')
+  const [countdown, setCountdown]     = useState(MEMORIZE_PRACTICE)
   const [userSelected, setUserSelected] = useState(new Set())
-  const [score, setScore] = useState(null)
+  const [score, setScore]             = useState(null)
 
-  const timerRef = useRef(null)
+  const timerRef       = useRef(null)
+  const recallStartRef = useRef(null)
   const trial = trials[trialIdx]
 
   // Memorization countdown
   useEffect(() => {
     if (phase !== 'memorize') return
-    setCountdown(trials[trialIdx]?.isPractice ? MEMORIZE_PRACTICE : MEMORIZE_REAL)
+    const dur = trials[trialIdx]?.isPractice ? MEMORIZE_PRACTICE : MEMORIZE_REAL
+    setCountdown(dur)
     timerRef.current = setInterval(() => {
       setCountdown(prev => {
         if (prev <= 1) {
           clearInterval(timerRef.current)
-          setLocalPhase('recall')
+          setLocalPhase('change_reveal')
           return 0
         }
         return prev - 1
@@ -118,6 +146,24 @@ export default function SpatialMemoryBlock() {
     }, 1000)
     return () => clearInterval(timerRef.current)
   }, [trialIdx, phase])
+
+  // Change-reveal countdown (2 s fixed)
+  useEffect(() => {
+    if (phase !== 'change_reveal') return
+    setCountdown(CHANGE_REVEAL_TIME)
+    timerRef.current = setInterval(() => {
+      setCountdown(prev => {
+        if (prev <= 1) {
+          clearInterval(timerRef.current)
+          recallStartRef.current = Date.now()
+          setLocalPhase('recall')
+          return 0
+        }
+        return prev - 1
+      })
+    }, 1000)
+    return () => clearInterval(timerRef.current)
+  }, [phase])
 
   function toggleCell(idx) {
     if (phase !== 'recall') return
@@ -130,16 +176,20 @@ export default function SpatialMemoryBlock() {
 
   function handleConfirm() {
     if (phase !== 'recall') return
-    const correctPositions = trial.positions.filter(p => userSelected.has(p)).length
-    const result = {
-      correctPositions,
-      correctTypes: correctPositions, // simplified: position = type match
-      totalTargets: NUM_TARGETS,
+    const changedSet = new Set(trial.changedCells)
+    const correct = [...userSelected].filter(c => changedSet.has(c)).length
+    const fp      = [...userSelected].filter(c => !changedSet.has(c)).length
+    const rt      = Date.now() - (recallStartRef.current ?? Date.now())
+    setScore(correct)
+    if (!trial.isPractice) {
+      addSMTrial({
+        changedCellsCorrect: correct,
+        falsePositives: fp,
+        totalChangedCells: trial.changedCells.length,
+        reactionTimeMs: rt,
+      })
     }
-    setScore(correctPositions)
-    if (!trial.isPractice) addSMTrial(result)
     setLocalPhase('result')
-
     setTimeout(() => {
       if (trialIdx + 1 >= trials.length) {
         setPhase('processing')
@@ -149,21 +199,20 @@ export default function SpatialMemoryBlock() {
         setScore(null)
         setLocalPhase('memorize')
       }
-    }, 1200)
+    }, 1500)
   }
 
   if (!trial) return null
 
-  const cells = Array.from({ length: GRID_SIZE * GRID_SIZE }, (_, i) => i)
+  const cells      = Array.from({ length: GRID_SIZE * GRID_SIZE }, (_, i) => i)
+  const changedSet = new Set(trial.changedCells)
 
   return (
     <div className="sm-screen">
       <div className="sm-header">
         <div className="sm-label">Prueba 3 · Memoria Espacial Táctica</div>
         <div className="sm-progress">
-          {trial.isPractice
-            ? 'Práctica 1/1'
-            : `Ítem ${trialIdx}/${trials.length - 1}`}
+          {trial.isPractice ? 'Práctica 1/1' : `Ítem ${trialIdx}/${trials.length - 1}`}
         </div>
       </div>
 
@@ -179,7 +228,7 @@ export default function SpatialMemoryBlock() {
       {phase === 'memorize' && (
         <>
           <div className="sm-phase-label">
-            Memoriza las posiciones
+            Memoriza el mapa táctico
             {trial.isPractice
               ? <span className="sm-time-hint"> · {MEMORIZE_PRACTICE}s (práctica)</span>
               : <span className="sm-time-hint"> · {MEMORIZE_REAL}s</span>}
@@ -199,9 +248,29 @@ export default function SpatialMemoryBlock() {
         </>
       )}
 
+      {phase === 'change_reveal' && (
+        <>
+          <div className="sm-phase-label sm-phase-alert">
+            ¿Detectas los cambios?
+            <span className="sm-time-hint"> · {countdown}s</span>
+          </div>
+          <div className="sm-grid">
+            {cells.map(idx => {
+              const posIdx = trial.modifiedPositions.indexOf(idx)
+              return (
+                <div key={idx} className="sm-cell">
+                  {posIdx !== -1 && <SymbolSVG type={trial.types[posIdx]} />}
+                </div>
+              )
+            })}
+          </div>
+          <div className="sm-instruction">El mapa ha cambiado — observa bien</div>
+        </>
+      )}
+
       {phase === 'recall' && (
         <>
-          <div className="sm-phase-label">Indica dónde estaban los símbolos</div>
+          <div className="sm-phase-label">Marca las celdas que cambiaron</div>
           <div className="sm-grid">
             {cells.map(idx => (
               <div
@@ -211,7 +280,7 @@ export default function SpatialMemoryBlock() {
               />
             ))}
           </div>
-          <div className="sm-instruction">Selecciona {NUM_TARGETS} celdas</div>
+          <div className="sm-instruction">Marca dónde apareció el símbolo nuevo</div>
           <div className="sm-actions">
             <button
               className="btn btn-primary"
@@ -222,7 +291,7 @@ export default function SpatialMemoryBlock() {
               CONFIRMAR
             </button>
             <span style={{ fontFamily: 'var(--mono)', fontSize: 12, color: 'var(--text)' }}>
-              {userSelected.size}/{NUM_TARGETS} seleccionadas
+              {userSelected.size} seleccionadas
             </span>
           </div>
         </>
@@ -233,24 +302,22 @@ export default function SpatialMemoryBlock() {
           <div className="sm-phase-label">Resultado</div>
           <div className="sm-grid">
             {cells.map(idx => {
-              const isTarget = trial.positions.includes(idx)
+              const isChanged  = changedSet.has(idx)
               const isSelected = userSelected.has(idx)
+              const posIdx     = trial.modifiedPositions.indexOf(idx)
               let cls = 'sm-cell'
-              if (isTarget && isSelected) cls += ' correct-pos'
-              else if (!isTarget && isSelected) cls += ' wrong-pos'
-              else if (isTarget) cls += ' correct-pos' // show where they were
+              if (isChanged && isSelected)       cls += ' correct-pos'
+              else if (!isChanged && isSelected) cls += ' wrong-pos'
+              else if (isChanged && !isSelected) cls += ' missed-pos'
               return (
                 <div key={idx} className={cls}>
-                  {isTarget && (() => {
-                    const posIdx = trial.positions.indexOf(idx)
-                    return <SymbolSVG type={trial.types[posIdx]} size={22} />
-                  })()}
+                  {posIdx !== -1 && <SymbolSVG type={trial.types[posIdx]} size={22} />}
                 </div>
               )
             })}
           </div>
           <div className="sm-score">
-            {score}/{NUM_TARGETS} correctas
+            {score}/{trial.changedCells.length} cambios detectados
           </div>
         </>
       )}

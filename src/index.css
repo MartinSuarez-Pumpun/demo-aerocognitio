@@ -9,7 +9,7 @@
   --text:         rgba(0, 255, 65, 0.65);
   --text-h:       #00FF41;
   --accent:       #00FF41;
-  --accent-dim:   rgba(0, 255, 65, 0.05);
+  --accent-dim:   rgba(0, 255, 65, 0.22);
   --accent-border:rgba(0, 255, 65, 0.40);
   --green:        #00FF41;
   --green-dim:    rgba(0, 255, 65, 0.08);
@@ -20,8 +20,9 @@
   --mono: 'Share Tech Mono', 'Courier New', monospace;
   --sans: 'Share Tech Mono', 'Courier New', monospace;
 
-  font: 16px/150% var(--mono);
-  letter-spacing: 0.08em;
+  font: 30px/150% var(--mono);
+  letter-spacing: -1px;
+  text-transform: uppercase;
   color: var(--text);
   background: var(--bg);
   font-synthesis: none;
@@ -56,9 +57,15 @@ h1, h2, h3 {
 
 p { margin: 0; }
 
+button, input, select, textarea {
+  text-transform: inherit;
+  letter-spacing: inherit;
+  font-family: inherit;
+}
+
 code {
   font-family: var(--mono);
-  font-size: 13px;
+  font-size: 18px;
   padding: 2px 6px;
   background: var(--bg-card);
   border: 1px solid var(--border);
