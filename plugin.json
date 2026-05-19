@@ -1,12 +1,14 @@
 {
   "id": "aerocognitio",
   "version": "1.0.0",
+  "code": "MOD-06",
   "label": "AEROCOGNITIO",
   "desc": "BATERÍA PSICOTÉCNICA RPAS — EVALUACIÓN COGNITIVO-ESPACIAL — INFORME IA PERSONALIZADO",
   "category": "psicotécnica",
   "tag": "UAV · RPAS",
   "duration": "~6 MIN",
   "color": "#ffb547",
+  "icon": "Brain",
   "status": "ACTIVO",
   "entry": "src/plugin.jsx"
 }
