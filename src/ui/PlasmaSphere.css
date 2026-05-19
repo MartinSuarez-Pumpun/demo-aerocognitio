@@ -1,0 +1,12 @@
+.plasma-sphere-wrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.plasma-sphere-canvas {
+  display: block;
+  border-radius: 50%;
+}
