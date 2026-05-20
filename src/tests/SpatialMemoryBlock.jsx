@@ -5,7 +5,7 @@ import './SpatialMemoryBlock.css'
 const GRID_SIZE          = 5
 const NUM_TARGETS        = 4
 const NUM_TRIALS         = 4
-const NUM_CHANGES        = 1
+const NUM_CHANGES        = 2
 const MEMORIZE_PRACTICE  = 12
 const MEMORIZE_REAL      = 8
 const CHANGE_REVEAL_TIME = 3
