@@ -5,19 +5,15 @@ No uses listas, puntos ni formato. Solo texto corrido que suene natural al ser l
 Devuelve ÚNICAMENTE el texto del resumen, sin comillas ni formato adicional.`
 
 export async function generateSpokenSummary(report, targetRole) {
-  const key = import.meta.env.VITE_XAI_API_KEY
-  if (!key) return buildFallback(report)
-
   const prompt = `Rol evaluado: ${targetRole ?? 'no especificado'}.
 Título del informe: ${report.headline}.
 Recomendación: ${report.recommendation}.
 Genera el resumen oral.`
 
   try {
-    const res = await fetch('https://api.x.ai/v1/chat/completions', {
+    const res = await fetch('/api/xai/v1/chat/completions', {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${key}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({

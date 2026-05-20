@@ -66,13 +66,10 @@ Genera el informe en JSON siguiendo el esquema obligatorio.`
 }
 
 export async function generateReport(role, metrics) {
-  const key = import.meta.env.VITE_XAI_API_KEY
-  if (!key) return FALLBACK
   try {
-    const res = await fetch('https://api.x.ai/v1/chat/completions', {
+    const res = await fetch('/api/xai/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${key}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
