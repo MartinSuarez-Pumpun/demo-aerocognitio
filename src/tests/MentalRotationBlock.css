@@ -2,9 +2,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  height: 100%;
-  padding: 0 24px;
+  justify-content: safe center;
+  min-height: 100%;
+  padding: 32px 24px;
   box-sizing: border-box;
   gap: 28px;
   animation: fadeIn 0.4s ease;
@@ -214,7 +214,15 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Responsive ─────────────────────────────────────────── */
+/* ── Responsive altura ───────────────────────────────────── */
+@media (max-height: 650px) {
+  .mr-screen { gap: 16px; padding: 16px 24px; }
+  .mr-canvas--ref { width: min(300px, 55vw, 45vh); height: min(300px, 55vw, 45vh); }
+  .mr-canvas--opt { width: min(180px, 30vw, 28vh); height: min(180px, 30vw, 28vh); }
+  .mr-confirm { font-size: 24px; padding: 16px 32px; }
+}
+
+/* ── Responsive anchura ──────────────────────────────────── */
 @media (max-width: 768px) {
   .mr-screen { gap: 20px; }
   .mr-label  { font-size: 22px; }

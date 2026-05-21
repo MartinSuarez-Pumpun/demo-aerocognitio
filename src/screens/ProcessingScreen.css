@@ -2,10 +2,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  height: 100%;
+  justify-content: safe center;
+  min-height: 100%;
+  padding: 40px 24px;
   gap: 40px;
   animation: fadeIn 0.5s ease;
+  box-sizing: border-box;
 }
 
 .processing-logo {

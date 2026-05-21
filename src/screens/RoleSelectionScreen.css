@@ -2,9 +2,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  height: 100%;
-  padding: 0 24px;
+  justify-content: safe center;
+  min-height: 100%;
+  padding: 32px 24px;
   gap: 32px;
   animation: fadeIn 0.5s ease;
   box-sizing: border-box;
@@ -131,7 +131,15 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Responsive ─────────────────────────────────────────── */
+/* ── Responsive altura ───────────────────────────────────── */
+@media (max-height: 650px) {
+  .role-selection-screen { gap: 16px; padding: 20px 24px; }
+  .role-selection-heading { font-size: 28px; }
+  .role-card-btn { padding: 16px 20px; gap: 10px; }
+  .role-card-dims { display: none; }
+}
+
+/* ── Responsive anchura ──────────────────────────────────── */
 @media (max-width: 768px) {
   .role-selection-heading { font-size: clamp(28px, 5vw, 48px); }
   .role-card-btn { padding: 20px; }
