@@ -28,7 +28,7 @@
 
   /* ── Layout — fit inside INNOVADEF content area ────────── */
   width: 100%;
-  min-height: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   font-family: var(--mono);
@@ -37,13 +37,13 @@
   letter-spacing: -1px;
   text-transform: uppercase;
   color: var(--text);
-  /* No background: INNOVADEF provides it */
+  background: var(--bg);
 }
 
-/* Override .app-shell when embedded (no fixed height, no overflow:hidden) */
+/* Override .app-shell cuando está embebido: height:100% en lugar de 100svh,
+   sin overflow:hidden para no recortar contenido dentro del contenedor fijo del host */
 .aerocognitio-plugin .app-shell {
-  height: auto;
-  min-height: 100%;
+  height: 100%;
   overflow: visible;
 }
 
