@@ -56,7 +56,7 @@
 
 .sm-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, clamp(54px, 16vw, 110px));
   gap: 6px;
   padding: 18px;
   border: 1px solid var(--border);
@@ -64,8 +64,7 @@
 }
 
 .sm-cell {
-  width: 110px;
-  height: 110px;
+  aspect-ratio: 1;
   border: 1px solid var(--border-dim);
   display: flex;
   align-items: center;
@@ -142,4 +141,20 @@
 @keyframes fadeIn {
   from { opacity: 0; }
   to   { opacity: 1; }
+}
+
+/* ── Responsive ─────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .sm-grid { padding: 12px; gap: 4px; }
+  .sm-countdown { font-size: 64px; }
+  .sm-phase-label { font-size: 22px; }
+  .sm-actions .btn-primary { font-size: 26px; padding: 20px 28px; }
+}
+
+@media (max-width: 480px) {
+  .sm-screen { padding: 0 12px; gap: 16px; }
+  .sm-grid { padding: 8px; gap: 3px; }
+  .sm-countdown { font-size: 48px; }
+  .sm-label { font-size: 22px; }
+  .sm-actions .btn-primary { font-size: 22px; padding: 16px 22px; }
 }

@@ -103,8 +103,8 @@
 }
 
 .mr-canvas--ref {
-  width: 420px;
-  height: 420px;
+  width: min(420px, 80vw);
+  height: min(420px, 80vw);
 }
 
 /* Separador central */
@@ -205,11 +205,26 @@
 .mr-option.wrong    .mr-option-label { color: var(--red); }
 
 .mr-canvas--opt {
-  width: 260px;
-  height: 260px;
+  width: min(260px, 38vw);
+  height: min(260px, 38vw);
 }
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Responsive ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .mr-screen { gap: 20px; }
+  .mr-label  { font-size: 22px; }
+  .mr-confirm { font-size: 26px; padding: 20px 32px; }
+}
+
+@media (max-width: 560px) {
+  .mr-screen { padding: 0 12px; gap: 14px; }
+  .mr-canvas--ref { width: min(300px, 88vw); height: min(300px, 88vw); }
+  .mr-canvas--opt { width: min(130px, 42vw); height: min(130px, 42vw); }
+  .mr-confirm { font-size: 22px; padding: 16px 24px; }
+  .mr-label  { font-size: 18px; }
 }

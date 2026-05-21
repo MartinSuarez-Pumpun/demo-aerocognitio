@@ -104,3 +104,18 @@
   from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+/* ── Responsive ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .welcome-screen { gap: 20px; padding: 16px; }
+  .welcome-step-text { font-size: 20px; }
+  .welcome-step-meta { font-size: 14px; }
+}
+
+@media (max-width: 480px) {
+  .welcome-screen { gap: 16px; padding: 12px; }
+  .welcome-step { flex-direction: column; align-items: flex-start; gap: 6px; padding: 10px 14px; }
+  .welcome-step-meta { margin-left: 0; }
+  .welcome-step-text { font-size: 17px; }
+  .welcome-notice { font-size: 14px; }
+}

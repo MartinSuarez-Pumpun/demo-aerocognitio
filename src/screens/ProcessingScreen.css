@@ -49,7 +49,7 @@
 }
 
 .processing-progress-track {
-  width: 420px;
+  width: min(420px, 85vw);
   height: 4px;
   background: var(--border);
   overflow: hidden;

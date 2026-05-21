@@ -20,7 +20,7 @@
   --mono: 'Share Tech Mono', 'Courier New', monospace;
   --sans: 'Share Tech Mono', 'Courier New', monospace;
 
-  font: 30px/150% var(--mono);
+  font: clamp(16px, 2.5vw, 30px)/150% var(--mono);
   letter-spacing: -1px;
   text-transform: uppercase;
   color: var(--text);

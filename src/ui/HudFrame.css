@@ -73,3 +73,15 @@
 .hud-content {
   padding: 36px;
 }
+
+/* ── Responsive ─────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .hud-top-bar { padding: 10px 14px; gap: 10px; }
+  .hud-content { padding: 20px; }
+}
+
+@media (max-width: 480px) {
+  .hud-top-bar { flex-wrap: wrap; }
+  .hud-subtitle { display: none; }
+  .hud-content { padding: 14px; }
+}

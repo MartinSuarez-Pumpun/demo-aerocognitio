@@ -139,3 +139,18 @@
   from { opacity: 0; }
   to   { opacity: 1; }
 }
+
+/* ── Responsive ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .so-instruments-row { flex-direction: column; align-items: center; gap: 20px; }
+  .so-options { gap: 12px; max-width: 100%; }
+  .so-confirm-row .btn-primary { width: 60%; }
+}
+
+@media (max-width: 480px) {
+  .so-screen { padding: 0 12px; gap: 20px; }
+  .so-options { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .so-confirm-row .btn-primary { width: 80%; font-size: 26px; padding: 20px 28px; }
+  .so-feedback { font-size: 26px; }
+  .so-label { font-size: 22px; }
+}
