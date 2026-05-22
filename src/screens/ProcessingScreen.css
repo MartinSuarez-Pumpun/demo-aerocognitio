@@ -2,17 +2,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: safe center;
-  min-height: 100%;
-  padding: 40px 24px;
-  gap: 40px;
+  justify-content: center;
+  height: 100%;
+  gap: var(--sp-xl);
   animation: fadeIn 0.5s ease;
-  box-sizing: border-box;
 }
 
 .processing-logo {
   font-family: var(--mono);
-  font-size: 20px;
+  font-size: var(--fs-md);
   text-transform: uppercase;
   color: var(--accent);
   opacity: 0.8;
@@ -20,13 +18,13 @@
 
 .processing-spinner {
   display: flex;
-  gap: 14px;
+  gap: var(--sp-md);
   align-items: center;
 }
 
 .processing-dot {
-  width: 16px;
-  height: 16px;
+  width: clamp(10px, 1.5vh, 18px);
+  height: clamp(10px, 1.5vh, 18px);
   background: var(--accent);
   animation: pulseDot 1.4s ease-in-out infinite;
 }
@@ -43,16 +41,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: var(--sp-sm);
   font-family: var(--mono);
-  font-size: 18px;
+  font-size: var(--fs-md);
   text-transform: uppercase;
   color: var(--text);
 }
 
 .processing-progress-track {
-  width: min(420px, 85vw);
-  height: 4px;
+  width: min(420px, 80vw);
+  height: clamp(3px, 0.4vh, 5px);
   background: var(--border);
   overflow: hidden;
 }
@@ -67,7 +65,7 @@
 .processing-steps {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--sp-sm);
   max-width: 480px;
   width: 100%;
 }
@@ -75,9 +73,9 @@
 .processing-step-row {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: var(--sp-md);
   font-family: var(--mono);
-  font-size: 17px;
+  font-size: var(--fs-sm);
   color: var(--text);
   opacity: 0.6;
 }
@@ -88,14 +86,14 @@
 }
 
 .processing-step-icon {
-  width: 22px;
-  height: 22px;
+  width: clamp(16px, 2vh, 24px);
+  height: clamp(16px, 2vh, 24px);
   border: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  font-size: 12px;
+  font-size: var(--fs-xs);
 }
 
 .processing-step-row.active .processing-step-icon {

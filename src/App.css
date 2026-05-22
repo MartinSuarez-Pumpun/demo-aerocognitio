@@ -342,39 +342,3 @@
   border-color: #fa0;
 }
 .btn-ghost:hover { border-color: #ffa040; color: #ffa040; }
-
-/* ── Responsive ─────────────────────────────────────────── */
-@media (max-width: 768px) {
-  .app { padding: 24px 16px 72px; gap: 24px; }
-
-  .hud-header {
-    padding: 12px 16px;
-    font-size: 14px;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  .hud-header .brand { font-size: 24px; }
-  .hud-header .meta  { gap: 12px; font-size: 13px; }
-
-  .btn { font-size: 18px; padding: 14px 24px; }
-  .btn-primary { width: auto; font-size: 20px; padding: 16px 28px; }
-
-  .headline-card h1 { font-size: clamp(26px, 5vw, 44px); }
-
-  .two-col,
-  .dim-grid { grid-template-columns: 1fr; }
-}
-
-@media (max-width: 480px) {
-  .app { padding: 16px 12px 64px; gap: 16px; }
-  .hud-header .meta { flex-direction: column; gap: 4px; }
-  .btn { font-size: 16px; padding: 12px 18px; }
-  .btn-primary { font-size: 18px; padding: 14px 20px; }
-  .disclaimer { padding: 14px 16px; font-size: 16px; }
-  .narrative-card p,
-  .role-card .role-summary,
-  .dim-card .dim-comment { font-size: 18px; }
-  .rec-card p { font-size: 18px; }
-  .tag-row { font-size: 17px; }
-  .dim-card { padding: 20px; }
-}

@@ -10,8 +10,8 @@
 
 .corner {
   position: absolute;
-  width: 12px;
-  height: 12px;
+  width: clamp(8px, 1.2vh, 14px);
+  height: clamp(8px, 1.2vh, 14px);
   border-color: var(--accent);
   border-style: solid;
 }
@@ -43,12 +43,12 @@
 .hud-top-bar {
   display: flex;
   align-items: center;
-  gap: 20px;
-  padding: 14px 28px;
+  gap: var(--sp-md);
+  padding: var(--sp-sm) var(--sp-lg);
   background: var(--bg-card);
   border-bottom: 1.5px solid var(--border);
   font-family: var(--mono);
-  font-size: 16px;
+  font-size: var(--fs-sm);
   text-transform: uppercase;
 }
 
@@ -65,23 +65,11 @@
 
 .hud-phase {
   color: var(--text);
-  font-size: 14px;
-  padding: 3px 12px;
+  font-size: var(--fs-xs);
+  padding: var(--sp-xs) var(--sp-sm);
   border: 1px solid var(--border);
 }
 
 .hud-content {
-  padding: 36px;
-}
-
-/* ── Responsive ─────────────────────────────────────────── */
-@media (max-width: 640px) {
-  .hud-top-bar { padding: 10px 14px; gap: 10px; }
-  .hud-content { padding: 20px; }
-}
-
-@media (max-width: 480px) {
-  .hud-top-bar { flex-wrap: wrap; }
-  .hud-subtitle { display: none; }
-  .hud-content { padding: 14px; }
+  padding: var(--sp-lg);
 }

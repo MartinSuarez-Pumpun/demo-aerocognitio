@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { useStore } from '../core/store'
 import './SpatialOrientationBlock.css'
 
@@ -184,6 +184,9 @@ export default function SpatialOrientationBlock() {
   const addSOTrial = useStore(s => s.addSOTrial)
   const setPhase   = useStore(s => s.setPhase)
 
+  const instrSize  = useMemo(() => Math.round(Math.min(window.innerHeight * 0.13, 160)), [])
+  const optSize    = useMemo(() => Math.round(Math.min(window.innerHeight * 0.11, 130)), [])
+
   const [trials]                    = useState(() => buildTrials())
   const [trialIdx, setTrialIdx]     = useState(0)
   const [selected, setSelected]     = useState(null)
@@ -303,11 +306,11 @@ export default function SpatialOrientationBlock() {
       <div className="so-instruments-row">
         <div className="so-adi-wrap">
           <div className="so-adi-label">Actitud</div>
-          <AdiDisplay pitch={trial.pitch} roll={trial.roll} size={130} frameRotation={trial.frameRotation} />
+          <AdiDisplay pitch={trial.pitch} roll={trial.roll} size={instrSize} frameRotation={trial.frameRotation} />
         </div>
         <div className="so-adi-wrap">
           <div className="so-adi-label">Rumbo</div>
-          <HsiDisplay heading={trial.heading} size={130} />
+          <HsiDisplay heading={trial.heading} size={instrSize} />
         </div>
       </div>
 
@@ -328,7 +331,7 @@ export default function SpatialOrientationBlock() {
               onClick={() => handleSelect(i)}
               disabled={answered}
             >
-              <HorizonOption pitch={opt.pitch} roll={opt.roll} heading={opt.heading} size={110} />
+              <HorizonOption pitch={opt.pitch} roll={opt.roll} heading={opt.heading} size={optSize} />
               <div className="so-option-label">Opción {String.fromCharCode(65 + i)}</div>
             </button>
           )

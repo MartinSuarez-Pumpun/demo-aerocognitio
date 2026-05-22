@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import { useStore } from '../core/store'
 import './SpatialMemoryBlock.css'
 
@@ -117,6 +117,8 @@ function buildTrials() {
 export default function SpatialMemoryBlock() {
   const addSMTrial = useStore(s => s.addSMTrial)
   const setPhase   = useStore(s => s.setPhase)
+
+  const symbolSize = useMemo(() => Math.round(Math.min(window.innerHeight * 0.022, 28)), [])
 
   const [trials]                      = useState(() => buildTrials())
   const [trialIdx, setTrialIdx]       = useState(0)
@@ -311,7 +313,7 @@ export default function SpatialMemoryBlock() {
               else if (isChanged && !isSelected) cls += ' missed-pos'
               return (
                 <div key={idx} className={cls}>
-                  {posIdx !== -1 && <SymbolSVG type={trial.types[posIdx]} size={22} />}
+                  {posIdx !== -1 && <SymbolSVG type={trial.types[posIdx]} size={symbolSize} />}
                 </div>
               )
             })}
