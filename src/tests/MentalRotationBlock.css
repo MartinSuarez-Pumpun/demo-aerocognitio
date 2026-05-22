@@ -4,13 +4,21 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   height: 100%;
-  padding: 0 clamp(12px, 2vw, 24px);
+  padding: var(--sp-xl) clamp(12px, 2vw, 24px);
   box-sizing: border-box;
   gap: clamp(12px, 1.8vh, 24px);
   animation: fadeIn 0.4s ease;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,255,65,0.25) transparent;
 }
+
+.mr-screen::-webkit-scrollbar { width: 3px; }
+.mr-screen::-webkit-scrollbar-track { background: transparent; }
+.mr-screen::-webkit-scrollbar-thumb { background: rgba(0,255,65,0.25); }
 
 .mr-header {
   text-align: center;
