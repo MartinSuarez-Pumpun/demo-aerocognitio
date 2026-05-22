@@ -214,63 +214,56 @@ export default function MentalRotationBlock() {
         </div>
       </div>
 
-      <div className="mr-layout">
-        {/* Referencia */}
-        <div className="mr-ref-wrap">
-          <div className="mr-canvas-label">REFERENCIA</div>
-          <div className="mr-canvas mr-canvas--ref">
-            <Canvas gl={{ antialias: true, alpha: false }} style={{ background: '#0f1520' }}>
-              <Scene
-                cubes={FIGURES[trial.figIdx]}
-                startY={refStartY}
-                color="#ffb547"
-                emissive="#2a1200"
-              />
-            </Canvas>
-          </div>
+      {/* Referencia */}
+      <div className="mr-ref-wrap">
+        <div className="mr-canvas-label">REFERENCIA</div>
+        <div className="mr-canvas mr-canvas--ref">
+          <Canvas gl={{ antialias: true, alpha: false }} style={{ background: '#0f1520' }}>
+            <Scene
+              cubes={FIGURES[trial.figIdx]}
+              startY={refStartY}
+              color="#ffb547"
+              emissive="#2a1200"
+            />
+          </Canvas>
         </div>
-
-        {/* Separador */}
-        <div className="mr-divider">
-          <span>¿Cuál es la misma figura?</span>
-        </div>
-
-        {/* 4 opciones */}
-        <div className="mr-options-wrap">
-          <div className="mr-options">
-            {trial.options.map((opt, i) => {
-              const isSel = selected.has(i)
-              const { color, emissive } = optionColors(isSel, revealed, opt.isCorrect)
-              const isWrong   = revealed && isSel && !opt.isCorrect
-              const isCorrect = revealed && opt.isCorrect
-              return (
-                <button
-                  key={i}
-                  type="button"
-                  className={`mr-option ${isSel ? 'selected' : ''} ${isCorrect ? 'correct' : ''} ${isWrong ? 'wrong' : ''}`}
-                  onClick={() => toggleOption(i)}
-                  disabled={revealed}
-                >
-                  <div className="mr-option-label">{LABELS[i]}</div>
-                  <div className="mr-canvas mr-canvas--opt">
-                    <Canvas gl={{ antialias: true, alpha: false }} style={{ background: '#0a0e14' }}>
-                      <Scene cubes={opt.cubes} startY={startYs[i]} color={color} emissive={emissive} />
-                    </Canvas>
-                  </div>
-                </button>
-              )
-            })}
-          </div>
-          <button
-            type="button"
-            className={`mr-confirm ${selected.size === 0 || revealed ? 'disabled' : ''}`}
-            onClick={handleConfirm}
-            disabled={selected.size === 0 || revealed}
-          >
-            {revealed ? '—' : `Confirmar (${selected.size}/2)`}
-          </button>
-        </div>
+        <div className="mr-ref-question">¿Cuál es la misma figura?</div>
       </div>
+
+      {/* 4 opciones */}
+      <div className="mr-options">
+        {trial.options.map((opt, i) => {
+          const isSel = selected.has(i)
+          const { color, emissive } = optionColors(isSel, revealed, opt.isCorrect)
+          const isWrong   = revealed && isSel && !opt.isCorrect
+          const isCorrect = revealed && opt.isCorrect
+          return (
+            <button
+              key={i}
+              type="button"
+              className={`mr-option ${isSel ? 'selected' : ''} ${isCorrect ? 'correct' : ''} ${isWrong ? 'wrong' : ''}`}
+              onClick={() => toggleOption(i)}
+              disabled={revealed}
+            >
+              <div className="mr-option-label">{LABELS[i]}</div>
+              <div className="mr-canvas mr-canvas--opt">
+                <Canvas gl={{ antialias: true, alpha: false }} style={{ background: '#0a0e14' }}>
+                  <Scene cubes={opt.cubes} startY={startYs[i]} color={color} emissive={emissive} />
+                </Canvas>
+              </div>
+            </button>
+          )
+        })}
+      </div>
+
+      <button
+        type="button"
+        className={`mr-confirm ${selected.size === 0 || revealed ? 'disabled' : ''}`}
+        onClick={handleConfirm}
+        disabled={selected.size === 0 || revealed}
+      >
+        {revealed ? '—' : `Confirmar (${selected.size}/2)`}
+      </button>
     </div>
   )
 }
