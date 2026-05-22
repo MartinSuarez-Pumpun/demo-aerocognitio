@@ -66,14 +66,6 @@ export default function ReportIntroScreen() {
     const audio = new Audio(url)
     audioRef.current = audio
 
-    const ctx      = new AudioContext()
-    audioCtxRef.current = ctx
-    const source   = ctx.createMediaElementSource(audio)
-    const analyser = ctx.createAnalyser()
-    analyser.fftSize = 128
-    source.connect(analyser)
-    analyser.connect(ctx.destination)
-
     audio.addEventListener('loadedmetadata', () => {
       startTypewriter(text, audio.duration * 1000)
     }, { once: true })
@@ -83,7 +75,6 @@ export default function ReportIntroScreen() {
       setIsSpeaking(true)
       isSpeakingRef.current = true
       setStatus('AEROCOGNITIO · SÍNTESIS ORAL')
-      startAnalyser(analyser)
     }, { once: true })
 
     audio.addEventListener('ended', () => {
@@ -98,13 +89,29 @@ export default function ReportIntroScreen() {
       setTimeout(() => { if (!cancelledRef.current) setPhase('report') }, 1400)
     }, { once: true })
 
+    // Play first — iOS requires audio.play() before any AudioContext setup
     try {
-      await ctx.resume()
       await audio.play()
       setShowPlayBtn(false)
     } catch {
       setStatus('Toca para escuchar la síntesis')
       setShowPlayBtn(true)
+      return
+    }
+
+    // Analyser is optional: enhances orb animation but must not block audio
+    try {
+      const ctx      = new AudioContext()
+      audioCtxRef.current = ctx
+      const source   = ctx.createMediaElementSource(audio)
+      const analyser = ctx.createAnalyser()
+      analyser.fftSize = 128
+      source.connect(analyser)
+      analyser.connect(ctx.destination)
+      await ctx.resume()
+      startAnalyser(analyser)
+    } catch {
+      // AudioContext failed (common on iOS) — audio still plays, orb won't animate
     }
   }
 
