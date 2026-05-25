@@ -49,6 +49,12 @@ function AdiDisplay({ pitch, roll, size = 120, frameRotation = 0 }) {
 function HsiDisplay({ heading, size = 120 }) {
   const cx = size / 2, cy = size / 2, r = size / 2 - 4
   const cardRotation = -heading
+  // Proporcional a r para que no se apelotonen en tamaños pequeños
+  const outerR   = Math.round(r * 0.9)
+  const innerR   = Math.round(r * 0.72)
+  const labelR   = Math.round(r * 0.5)
+  const fontNorm = Math.max(7, Math.round(r * 0.18))
+  const fontNorth = Math.max(9, Math.round(r * 0.22))
 
   return (
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
@@ -63,9 +69,6 @@ function HsiDisplay({ heading, size = 120 }) {
         {HEADING_LABELS.map((label, i) => {
           const angleDeg = i * 45 - 90
           const angleRad = angleDeg * Math.PI / 180
-          const outerR = r - 6
-          const innerR = r - 16
-          const labelR = r - 28
           const isNorth = label === 'N'
           return (
             <g key={label}>
@@ -83,7 +86,7 @@ function HsiDisplay({ heading, size = 120 }) {
                 textAnchor="middle"
                 dominantBaseline="central"
                 fill={isNorth ? '#ff5252' : '#8ca0b8'}
-                fontSize={isNorth ? 12 : 9}
+                fontSize={isNorth ? fontNorth : fontNorm}
                 fontFamily="monospace"
                 fontWeight={isNorth ? 'bold' : 'normal'}
               >{label}</text>
@@ -99,7 +102,7 @@ function HsiDisplay({ heading, size = 120 }) {
       />
 
       <circle cx={cx} cy={cy} r={3} fill="#ffb547" />
-      <text x={cx} y={cy + 16} textAnchor="middle" fill="#ffb547" fontSize={12} fontFamily="monospace">
+      <text x={cx} y={cy + Math.round(r * 0.28)} textAnchor="middle" fill="#ffb547" fontSize={Math.max(10, Math.round(r * 0.22))} fontFamily="monospace">
         {String(heading).padStart(3, '0')}°
       </text>
 

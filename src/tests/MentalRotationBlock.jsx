@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect, Suspense } from 'react'
+import { useState, useRef, useCallback, useEffect, Suspense, useMemo } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { OrthographicCamera } from '@react-three/drei'
 import { useStore } from '../core/store'
@@ -54,10 +54,10 @@ function RotatingFigure({ cubes, startY, color, emissive }) {
   )
 }
 
-function Scene({ cubes, startY, color, emissive }) {
+function Scene({ cubes, startY, color, emissive, zoom = 30 }) {
   return (
     <>
-      <OrthographicCamera makeDefault zoom={30} position={[0, 0, 20]} />
+      <OrthographicCamera makeDefault zoom={zoom} position={[0, 0, 20]} />
       <ambientLight intensity={0.5} />
       <directionalLight position={[6, 10, 6]}  intensity={1.4} />
       <directionalLight position={[-4, 2, -4]} intensity={0.25} color="#3355aa" />
@@ -120,6 +120,10 @@ export default function MentalRotationBlock() {
   const [startYs]  = useState(() =>
     Array.from({ length: 4 }, () => Math.random() * Math.PI * 2))
   const [refStartY] = useState(() => Math.random() * Math.PI * 2)
+
+  // Zoom proporcional al tamaño real del canvas (calibrado en zoom=30 para canvas≈185px)
+  const refZoom = useMemo(() => Math.round(30 * Math.min(window.innerHeight * 0.17, 200) / 185), [])
+  const optZoom = useMemo(() => Math.round(30 * Math.min(window.innerHeight * 0.16, 185) / 185), [])
 
   const startRef = useRef(Date.now())
   const timerRef = useRef(null)
@@ -224,6 +228,7 @@ export default function MentalRotationBlock() {
               startY={refStartY}
               color="#ffb547"
               emissive="#2a1200"
+              zoom={refZoom}
             />
           </Canvas>
         </div>
@@ -248,7 +253,7 @@ export default function MentalRotationBlock() {
               <div className="mr-option-label">{LABELS[i]}</div>
               <div className="mr-canvas mr-canvas--opt">
                 <Canvas gl={{ antialias: true, alpha: false }} style={{ background: '#0a0e14' }}>
-                  <Scene cubes={opt.cubes} startY={startYs[i]} color={color} emissive={emissive} />
+                  <Scene cubes={opt.cubes} startY={startYs[i]} color={color} emissive={emissive} zoom={optZoom} />
                 </Canvas>
               </div>
             </button>
