@@ -1,6 +1,5 @@
 import { useState, useRef, useCallback, useEffect, Suspense, useMemo } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { OrthographicCamera } from '@react-three/drei'
 import { useStore } from '../core/store'
 import './MentalRotationBlock.css'
 
@@ -54,10 +53,9 @@ function RotatingFigure({ cubes, startY, color, emissive }) {
   )
 }
 
-function Scene({ cubes, startY, color, emissive, zoom = 30 }) {
+function Scene({ cubes, startY, color, emissive }) {
   return (
     <>
-      <OrthographicCamera makeDefault zoom={zoom} position={[0, 0, 20]} />
       <ambientLight intensity={0.5} />
       <directionalLight position={[6, 10, 6]}  intensity={1.4} />
       <directionalLight position={[-4, 2, -4]} intensity={0.25} color="#3355aa" />
@@ -222,13 +220,12 @@ export default function MentalRotationBlock() {
       <div className="mr-ref-wrap">
         <div className="mr-canvas-label">REFERENCIA</div>
         <div className="mr-canvas mr-canvas--ref">
-          <Canvas gl={{ antialias: true, alpha: false }} style={{ background: '#0f1520' }}>
+          <Canvas orthographic camera={{ zoom: refZoom, position: [0, 0, 20] }} gl={{ antialias: true, alpha: false }} style={{ background: '#0f1520' }}>
             <Scene
               cubes={FIGURES[trial.figIdx]}
               startY={refStartY}
               color="#ffb547"
               emissive="#2a1200"
-              zoom={refZoom}
             />
           </Canvas>
         </div>
@@ -252,8 +249,8 @@ export default function MentalRotationBlock() {
             >
               <div className="mr-option-label">{LABELS[i]}</div>
               <div className="mr-canvas mr-canvas--opt">
-                <Canvas gl={{ antialias: true, alpha: false }} style={{ background: '#0a0e14' }}>
-                  <Scene cubes={opt.cubes} startY={startYs[i]} color={color} emissive={emissive} zoom={optZoom} />
+                <Canvas orthographic camera={{ zoom: optZoom, position: [0, 0, 20] }} gl={{ antialias: true, alpha: false }} style={{ background: '#0a0e14' }}>
+                  <Scene cubes={opt.cubes} startY={startYs[i]} color={color} emissive={emissive} />
                 </Canvas>
               </div>
             </button>
