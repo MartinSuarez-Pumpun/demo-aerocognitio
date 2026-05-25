@@ -37,7 +37,7 @@ export default function MilitaryCursor() {
         <svg width={s * 2} height={s * 2} style={{
           display: 'block',
           filter: fired
-            ? `drop-shadow(0 0 8px ${ACCENT})`
+            ? `drop-shadow(0 0 0.74vmin ${ACCENT})`
             : `drop-shadow(0 0 3px ${ACCENT})`,
         }}>
           <circle cx={s} cy={s} r={s - 3} fill="none" stroke={ACCENT}
