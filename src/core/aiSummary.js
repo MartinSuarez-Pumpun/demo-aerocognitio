@@ -1,3 +1,5 @@
+import { aiHeaders } from './aiToken'
+
 const SYSTEM = `Eres el sistema de síntesis oral de AeroCognitio, plataforma de evaluación psicotécnica militar.
 Genera un resumen oral conciso (máximo 3 frases, entre 40 y 60 palabras) del informe de evaluación.
 El texto será leído en voz alta. Usa segunda persona ("Su evaluación..."), tono formal y directo.
@@ -13,9 +15,7 @@ Genera el resumen oral.`
   try {
     const res = await fetch('/api/xai/v1/chat/completions', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: await aiHeaders(),
       body: JSON.stringify({
         model: 'grok-4-fast-non-reasoning',
         max_tokens: 150,
